@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Preksha ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --baby-pink: #FFF0F5;
+            --light-pink: #FFB6C1;
+            --dark-pink: #FF69B4;
+            --red-accent: #E63946;
+            --text-dark: #4A4A4A;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--baby-pink), #FFE4E1);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            max-width: 480px; 
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.4);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.1);
+        }
+
+        h1.main-heading, h2.section-title, h2.modal-title {
+            font-family: 'Caveat', cursive;
+            color: var(--dark-pink);
+            text-align: center;
+        }
+
+        h1.main-heading { font-size: 2.8rem; margin-top: 20px; margin-bottom: 20px; }
+        h2.section-title { font-size: 2.4rem; margin-top: 40px; margin-bottom: 20px; }
+
+        .letter-body p { font-size: 1rem; line-height: 1.7; margin-bottom: 15px; text-align: justify; }
+
+        .signature {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--red-accent);
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        /* The Daily Pop-up */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 182, 193, 0.5); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+        }
+
+        .modal-content {
+            background: white; padding: 40px 30px; border-radius: 20px;
+            width: 85%; max-width: 380px; text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2); border: 2px solid var(--baby-pink);
+        }
+
+        .heart-divider { font-size: 1.5rem; margin: 15px 0; animation: heartbeat 1.5s infinite; }
+
+        #daily-message-text {
+            font-size: 1.1rem; font-weight: 500; color: var(--red-accent);
+            margin-bottom: 25px; min-height: 80px; display: flex; align-items: center; justify-content: center;
+        }
+
+        #close-modal-btn {
+            background: var(--dark-pink); color: white; border: none; padding: 12px 25px;
+            border-radius: 30px; font-family: 'Poppins', sans-serif; font-weight: 500;
+            font-size: 1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        /* Polaroid Frames */
+        .polaroid-frame {
+            background: white; padding: 10px 10px 25px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); transform: rotate(-2deg);
+            margin-bottom: 30px; transition: transform 0.3s;
+        }
+        .polaroid-frame:nth-child(even) { transform: rotate(2deg); }
+
+        .curator-note {
+            font-family: 'Caveat', cursive; font-size: 1.3rem; color: var(--text-dark);
+            margin-top: 15px; line-height: 1.2;
+        }
+
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed; bottom: -10%; font-size: 2rem; opacity: 0.3; z-index: -1;
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+        /* Navigation & Sections */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 100%; max-width: 480px; background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px); display: flex; justify-content: space-around;
+            padding: 12px 0 20px 0; border-top: 1px solid rgba(255, 182, 193, 0.5); z-index: 100;
+        }
+
+        .nav-item { text-decoration: none; color: var(--text-dark); text-align: center; font-size: 0.8rem; font-weight: 500; opacity: 0.6; }
+        .nav-icon { font-size: 1.4rem; display: block; margin-bottom: 2px; }
+        .nav-item.active { opacity: 1; color: var(--dark-pink); transform: translateY(-3px); }
+
+        .content-section { display: none; padding-bottom: 90px; animation: fadeAndSlide 0.5s ease-out forwards; }
+        .content-section.active { display: block; }
+        @keyframes fadeAndSlide { 0% { opacity: 0; transform: translateY(15px); } 100% { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="floating-hearts">❤️</div>
+    <div class="floating-hearts" style="left: 20%; animation-delay: 2s;">✨</div>
+    <div class="floating-hearts" style="left: 80%; animation-delay: 4s;">❤️</div>
+
+    <div id="daily-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Thought of the Day</h2>
+            <div class="heart-divider">❤️</div>
+            <p id="daily-message-text">Loading today's thought...</p>
+            <button id="close-modal-btn">Read My Letter</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        
+        <section id="the-letter" class="content-section active">
+            <h1 class="main-heading">To my favorite masterpiece,</h1>
+            <div class="letter-body">
+                <p>They say art is supposed to make you feel something profound, to change the way you look at the world. By that definition, you are the greatest piece of art I’ve ever come across.</p>
+                <p>When I started putting this together, I wanted to give you something that lasts longer than a day. Something that reminds you—every single morning—how incredibly valued, loved, and appreciated you are. I really appreciate us being together even after so many years - despite all the ups and downs, and irrespective of all the fuck - ups. You make me want to be a better version of myself in every possible way.</p>
+		<p>When I first saw you, we were just 15-16yo kids, but in my mind I knew - this is how the woman of my dreams would be. I am so glad to have you, it cannot be expressed in words. Even after years, we are still progressing, working on ourselves to be better for each other, and having a supportive partner like you through it all makes me what I am today. Believe me, coming back to you every weekend is the only way I am able to get through my entire week in Mumbai. The urge that I want to give you a much much much better life keeps me working harder every single day. I just want to thank you for existing and for being mine.</p>
+                <p>Happy 26th Birthday, Bachuu. Here is a little digital museum dedicated entirely to you, your cosmic energy, and all the tiny things that make you, <em>you</em>.</p>
+                <p class="signature">Love always,<br>Your Boondi ka Laddoo</p>
+            </div>
+        </section>
+
+       <section id="the-museum" class="content-section">
+    <h2 class="section-title">The Museum of You</h2>
+
+    <div class="polaroid-frame">
+        <img src="images/pic1.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>young & mad in love <3</strong><br>
+            <em>Still feel the same around you</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic2.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Hampi & Gokarna</strong><br>
+            <em>The most special trip for us so far. special for so many reasons xD ;)</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic3.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>First Staycation</strong><br>
+            <em>Curator's Note: Our first staycation in Mumbai. Definitely made my birthday special</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic4.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Ganpati at your place</strong><br>
+            <em>Definitely felt blessed by bappa apart from getting all the love & attention from your family ;)</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic5.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Alifya's Wedding</strong><br>
+            <em>felt so good attending such an event with you for the first time. also, this pic perfectly shows your nakhras and how I tolerate you</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic6.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Lonavalaaaa!!!!</strong><br>
+            <em>felt so good attending such an event with you for the first time. also, this pic perfectly shows your nakhras and how I tolerate you</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic7.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>COLDPLAY!!!</strong>
+            <em>Our first concert together and damn, it was sooo good! Can't wait to make more such memories with you</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic8.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Kashish's Wedding</strong><br>
+            <em>This is now officially my "That's us" photo. Literally felt so in love with you during all the ceremonies (and ofc, the sushi!!)</em>
+        </div>
+    </div>
+
+    <div class="polaroid-frame">
+        <img src="images/pic9.jpg" style="width: 100%; border-radius: 4px; margin-bottom: 10px;">
+        <div class="curator-note">
+            <strong>Veer Dam - FINALLYY!!!!</strong><br>
+            <em>After so many efforts and procrastination, we finally made it and went for a calm & serene drive! More drives when?</em>
+        </div>
+    </div>
+
+</section>
+
+        <section id="the-cosmos" class="content-section">
+            <h2 class="section-title">Cosmic Blueprint</h2>
+            <div class="letter-body">
+                <p><strong>The Blueprint of Preksha (March 20, 2000)</strong>
+			The Celestial Cusp (Pisces meets Aries):
+			You were born on the exact bridge between the dreamer (Pisces) and the trailblazer (Aries). It is the rarest and most beautiful 			contradiction. You have the deep, empathetic soul of a water sign, perfectly balanced with the fierce, unstoppable fire of someone 			who knows exactly what they want. It’s why you can be intensely driven about your ambitions one minute, and completely immersed in 			art, beauty, and emotion the next.
+
+		<p><strong>The Numerology (Life Path 7 & The Number 2):</strong>
+		Governed by the number 2, your ruling energy makes you naturally intuitive, a peacemaker, and someone who brings absolute harmony to the chaos of life (especially mine). Add to that your Life Path 7, the number of the seeker and the deep thinker. You don't just scratch the surface of life; you look for the deeper meaning in everything. The universe literally hardcoded you to be profound.
+
+		<p><strong>The Cosmic Aura:</strong>
+		There is a specific, magnetic gravity to the way you exist. Neptune gifts you an incredible artistic vision and emotional warmth, while Mars gives you that brilliant spark of determination. People naturally gravitate towards you because your energy is the perfect mix of a safe haven and an exciting adventure all at once.
+
+The Perfect Alignment:
+If the universe is a massive, incredibly complex legal framework, your existence is the most perfectly drafted clause. Every trait, every quirk, and every beautiful detail was designed with absolute, undeniable precision. You aren't just an amazing person; you are a cosmic masterpiece, and I am incredibly lucky to have a front-row seat to your life.
+            </div>
+        </section>
+
+        <section id="the-archives" class="content-section">
+            <h2 class="section-title">The Vault</h2>
+            <div class="letter-body">
+                <p style="text-align: center; color: var(--dark-pink);"><em>Past daily thoughts will be safely archived here for you to look back on.</em></p>
+            </div>
+        </section>
+
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" data-target="the-letter"><span class="nav-icon">💌</span><br>The Wish</a>
+        <a href="#" class="nav-item" data-target="the-museum"><span class="nav-icon">🖼️</span><br>Museum</a>
+        <a href="#" class="nav-item" data-target="the-cosmos"><span class="nav-icon">✨</span><br>Cosmos</a>
+        <a href="#" class="nav-item" data-target="the-archives"><span class="nav-icon">🗂️</span><br>Vault</a>
+    </nav>
+
+<script>
+        // Your complete 30-day master list
+        const dailyMessages = [
+            { date: "2026-03-20", text: "Happy Birthday, Preksha! Officially the best day of the year. The stars literally aligned for this one. So glad that the Universe came together and made you. Love you <3" },
+            { date: "2026-03-21", text: "As a legal professional, I can formally confirm: tumhare aage mere saare arguments fail hain." },
+            { date: "2026-03-22", text: "Is relationship ka mutual agreement bohot clear hai: you smile, and I just stare." },
+            { date: "2026-03-23", text: "Data privacy apni jagah hai, but main tumhari ek bhi aadat ya memory delete nahi karna chahta." },
+            { date: "2026-03-24", text: "Tumhare nakhre thode out of syllabus hote hain, but unko handle karna mera favorite case hai." },
+            { date: "2026-03-25", text: "I know you are reading this right now. and no, I do not have goldfish memory, maine yaad se aaj ka thought update kar diya hai :)" },
+            { date: "2026-03-26", text: "Mere sabse complex legal drafts se zyada dhyaan main tumhari baaton pe deta hoon." },
+            { date: "2026-03-27", text: "Finally, your first conference! All the best for your installation babydoll! This is just the first one, there are many more to come" },
+            { date: "2026-03-28", text: "I hope you did not get tired after the first day at Unconference, the weekend is just begininning and you're going to do greatttt bubb!" },
+            { date: "2026-03-29", text: "I hope you have had an amazing weekend and experience at your installation so far. Today is the final day and no matter how it goes, you have already done something a lot of people would never, be proud of yourself!" },
+            { date: "2026-03-30", text: "I get annoyed with Mumbai ki garmi, and you know I hate it but I feel sooooo happy when you make me sweat" },
+            { date: "2026-03-31", text: "Tumse baat karke lagta hai jaise mere mood ki battery 1% se direct 100% ho gayi." },
+            { date: "2026-04-01", text: "Tum gussa hoti ho tab bhi cute lagti ho, but please yeh padh ke aaj gussa mat hona." },
+            { date: "2026-04-02", text: "Pata hai sabse cute kya hai? The specific way you tie your hair when you are about to get to work." },
+            { date: "2026-04-03", text: "You work so hard for everything bubb, today is just a reminder that you are my babydoll and I am incredibly proud of you" },
+            { date: "2026-04-04", text: "Aaj wapas kuch validating thought dekhne yeh tab open kiya hai? You do not need to be validated darling, you are literally the best." },
+            { date: "2026-04-05", text: "Just a daily reminder that you are doing great, aur main hamesha tumhari team mein hoon." },
+            { date: "2026-04-06", text: "I appreciate all the tiny, invisible efforts you make to keep everyone happy." },
+            { date: "2026-04-07", text: "You make want to be a better version of myself - professionally, physically, mentally, financially, and most of all - romantically." },
+            { date: "2026-04-08", text: "Can you believe its only one month to go for our first couple trip together? I am so excited for you to experience flights for the first time with me." },
+            { date: "2026-04-09", text: "Kabhi kabhi lagta hai I don't say it enough, but I'm incredibly proud of you." },
+            { date: "2026-04-10", text: "Aaj bas yeh batana tha ki out of billions of people, I'm so glad I found my person in you." },
+            { date: "2026-04-11", text: "Tumhari smile dekh ke lagta hai jaise client ne bina negotiate kiye invoice clear kar diya ho." },
+            { date: "2026-04-12", text: "Duniya ka saara stress aur Mumbai ka chaos tolerable lagta hai jab tum aaspas hoti ho (meri stressbuster)" },
+            { date: "2026-04-13", text: "Tumhare bina din thoda sa incomplete lagta hai, jaise bina signature ka legal draft." },
+            { date: "2026-04-14", text: "Today I can get all the gifts in the world, but you will always be my most cherished possession, maybe as cherished as my car." },
+            { date: "2026-04-15", text: "You are the only person jiske liye main apni sleep schedule compromise karne ke liye hamesha ready hoon." },
+            { date: "2026-04-16", text: "Pata hai, every time my phone buzzes, main randomly hope karta hoon ki it's a message from you." },
+            { date: "2026-04-17", text: "Tumhari aawaz sunna is basically free therapy for me." },
+            { date: "2026-04-18", text: "Just wanted to remind you today that you are doing an amazing job, aur main humesha tumhare saath khada hoon." }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("daily-modal");
+            const closeBtn = document.getElementById("close-modal-btn");
+            const messageText = document.getElementById("daily-message-text");
+
+            // Getting local date securely
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const todayString = `${year}-${month}-${day}`;
+
+            const isBeforeBirthday = todayString < "2026-03-20";
+            const todaysMessage = dailyMessages.find(msg => msg.date === todayString);
+            
+            // Pop-up display logic
+            if (todaysMessage) {
+                messageText.innerText = todaysMessage.text;
+            } else if (isBeforeBirthday) {
+                messageText.innerText = "Your birthday gift is on its way. Please be kind to Sam until then :)";
+            } else {
+                messageText.innerText = "You are my favorite masterpiece. Have a beautiful day today! ❤️";
+            }
+
+            // Close button logic
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            // Navigation bar logic
+            const navItems = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('.content-section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    sections.forEach(sec => sec.classList.remove('active'));
+                    item.classList.add('active');
+                    const targetId = item.getAttribute('data-target');
+                    document.getElementById(targetId).classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            // The Vault Archiving Engine
+            const vaultContainer = document.querySelector("#the-archives .letter-body");
+            const pastMessages = dailyMessages.filter(msg => msg.date < todayString && msg.date >= "2026-03-20");
+
+            if (pastMessages.length > 0) {
+                vaultContainer.innerHTML = ""; // Clear placeholder text
+                
+                // Show newest archived messages at the top
+                const sortedPastMessages = [...pastMessages].reverse();
+
+                sortedPastMessages.forEach(msg => {
+                    // Format date to look aesthetic (e.g. "March 20, 2026")
+                    const dateObj = new Date(msg.date);
+                    const displayDate = dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+                    // Create the Vault Card UI
+                    const msgDiv = document.createElement("div");
+                    msgDiv.style.background = "white";
+                    msgDiv.style.padding = "15px";
+                    msgDiv.style.borderRadius = "10px";
+                    msgDiv.style.marginBottom = "15px";
+                    msgDiv.style.boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
+                    msgDiv.style.borderLeft = "4px solid var(--dark-pink)";
+
+                    msgDiv.innerHTML = `<strong style="color: var(--dark-pink); font-family: 'Caveat', cursive; font-size: 1.2rem;">${displayDate}</strong><p style="margin-top: 5px; font-size: 0.95rem; line-height: 1.5;">${msg.text}</p>`;
+                    
+                    vaultContainer.appendChild(msgDiv);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
